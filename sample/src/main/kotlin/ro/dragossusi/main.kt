@@ -1,6 +1,14 @@
 package ro.dragossusi
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -13,6 +21,7 @@ import ro.dragossusi.navigation.NavHost
 import ro.dragossusi.navigation.rememberNavController
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun main() = application {
     val windowState = rememberWindowState(
         size = DpSize(1280.dp, 720.dp),
@@ -24,29 +33,55 @@ fun main() = application {
         state = windowState
     ) {
         val navController = rememberNavController()
-        NavHost(
-            navController,
-            "home"
-        ) {
-            composable("home") {
-                HomeScreen(
-                    onItem = {
-                        navController.navigate("item")
-                    },
-                    onHelp = {
-                        navController.navigate("help")
+        val entry by navController.navBackstackEntry
+        Scaffold(
+            bottomBar = {
+                NavigationBar {
+                    BotNavItem.values().forEach {
+                        NavigationBarItem(
+                            selected = entry?.route == it.route,
+                            onClick = {
+                                navController.navigate(it.route)
+                            },
+                            icon = {
+                                Icon(Icons.Default.Home, contentDescription = null)
+                            },
+                            label = {
+                                Text(it.route)
+                            }
+                        )
                     }
-                )
+                }
             }
-            composable("item") {
-                ItemScreen(
-                    onClick = navController::navigateUp
-                )
-            }
-            composable("help") {
-                HelpScreen(
-                    onClick = navController::navigateUp
-                )
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .padding(it)
+            )
+            NavHost(
+                navController,
+                "home"
+            ) {
+                composable("home") {
+                    HomeScreen(
+                        onItem = {
+                            navController.navigate("item")
+                        },
+                        onHelp = {
+                            navController.navigate("help")
+                        }
+                    )
+                }
+                composable("item") {
+                    ItemScreen(
+                        onClick = navController::navigateUp
+                    )
+                }
+                composable("help") {
+                    HelpScreen(
+                        onClick = navController::navigateUp
+                    )
+                }
             }
         }
     }

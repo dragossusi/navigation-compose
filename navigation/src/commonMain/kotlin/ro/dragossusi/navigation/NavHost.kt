@@ -12,6 +12,6 @@ fun NavHost(
 ) {
     val graph = rememberNavGraph(startRoute, startArguments, block)
     navController.navGraph = graph
-    val navBackstackEntry by graph.navBackstackEntry
-    navBackstackEntry.compose()
+    val navBackstackEntry by navController.navBackstackEntry
+    navBackstackEntry?.compose()
 }

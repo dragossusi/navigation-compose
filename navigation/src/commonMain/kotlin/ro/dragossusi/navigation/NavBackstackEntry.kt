@@ -4,12 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
 class NavBackstackEntry(
-    val destination: NavDestination,
+    private val destination: NavDestination,
     val arguments: NavArguments
 ) : ViewModelStore() {
 
+    val route: String = destination.route
+
     @Composable
-    fun compose() {
+    internal fun compose() {
         CompositionLocalProvider(LocalViewModelStore provides this) {
             destination.block(arguments)
         }
