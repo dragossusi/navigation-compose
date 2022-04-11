@@ -64,10 +64,10 @@ fun main() = application {
             ) {
                 composable("home") {
                     HomeScreen(
-                        onItem = {
+                        onGoToItem = {
                             navController.navigate("item")
                         },
-                        onHelp = {
+                        onGoToHelp = {
                             navController.navigate("help")
                         }
                     )

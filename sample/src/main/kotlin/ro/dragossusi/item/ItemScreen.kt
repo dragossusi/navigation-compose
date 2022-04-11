@@ -14,7 +14,7 @@ import ro.dragossusi.lifecycle.rememberViewModel
 
 @Composable
 fun ItemScreen(onClick: () -> Unit) {
-    val viewModel = rememberViewModel {
+    val viewModel: ItemViewModel = rememberViewModel {
         ItemViewModel()
     }
     val uiState by viewModel.uiState.collectAsState()

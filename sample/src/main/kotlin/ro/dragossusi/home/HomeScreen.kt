@@ -14,8 +14,8 @@ import ro.dragossusi.lifecycle.rememberViewModel
 
 @Composable
 fun HomeScreen(
-    onItem: () -> Unit,
-    onHelp: () -> Unit,
+    onGoToItem: () -> Unit,
+    onGoToHelp: () -> Unit,
 ) {
     val viewModel = rememberViewModel {
         HomeViewModel()
@@ -34,10 +34,10 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = onItem) {
+            Button(onClick = onGoToItem) {
                 Text("Item")
             }
-            Button(onClick = onHelp) {
+            Button(onClick = onGoToHelp) {
                 Text("Help")
             }
         }
