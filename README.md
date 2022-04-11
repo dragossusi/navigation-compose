@@ -1,6 +1,6 @@
 # navigation-compose
 
-[![Maven Central](https://maven-badges-generator.herokuapp.com/maven-central/ro.dragossusi/messagedata/badge.svg)](https://maven-badges-generator.herokuapp.com/maven-central/ro.dragossusi/navigation)
+[![Maven Central](https://maven-badges-generator.herokuapp.com/maven-central/ro.dragossusi/navigation/badge.svg)](https://maven-badges-generator.herokuapp.com/maven-central/ro.dragossusi/navigation)
 
 Gradle:
 
