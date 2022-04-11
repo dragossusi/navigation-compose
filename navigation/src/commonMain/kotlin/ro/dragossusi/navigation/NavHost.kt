@@ -1,6 +1,7 @@
 package ro.dragossusi.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 
 @Composable
@@ -13,5 +14,7 @@ fun NavHost(
     val graph = rememberNavGraph(startRoute, startArguments, block)
     navController.navGraph = graph
     val navBackstackEntry by navController.navBackstackEntry
-    navBackstackEntry?.compose()
+    CompositionLocalProvider(LocalNavController provides navController) {
+        navBackstackEntry?.compose()
+    }
 }

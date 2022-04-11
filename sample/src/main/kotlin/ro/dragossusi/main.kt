@@ -17,8 +17,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import ro.dragossusi.home.HomeScreen
 import ro.dragossusi.item.ItemScreen
-import ro.dragossusi.navigation.NavHost
-import ro.dragossusi.navigation.rememberNavController
+import ro.dragossusi.navigation.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,9 +38,15 @@ fun main() = application {
                 NavigationBar {
                     BotNavItem.values().forEach {
                         NavigationBarItem(
-                            selected = entry?.route == it.route,
+                            selected = entry?.startsWith(it.route) ?: false,
                             onClick = {
-                                navController.navigate(it.route)
+                                navController.navigate(
+                                    it.route,
+                                    navOptions = NavOptions(
+                                        launchSingleTop = true,
+                                        restoreState = true
+                                    )
+                                )
                             },
                             icon = {
                                 Icon(Icons.Default.Home, contentDescription = null)
@@ -65,22 +70,23 @@ fun main() = application {
                 composable("home") {
                     HomeScreen(
                         onGoToItem = {
-                            navController.navigate("item")
+                            navController.navigate("items")
                         },
                         onGoToHelp = {
+                            navController.navigate("items")
                             navController.navigate("help")
                         }
                     )
                 }
-                composable("item") {
-                    ItemScreen(
-                        onClick = navController::navigateUp
-                    )
-                }
-                composable("help") {
-                    HelpScreen(
-                        onClick = navController::navigateUp
-                    )
+                navigation("items", startRoute = "item") {
+                    composable("item") {
+                        ItemScreen { navController.navigate("help") }
+                    }
+                    composable("help") {
+                        HelpScreen(
+                            onClick = navController::navigateUp
+                        )
+                    }
                 }
             }
         }

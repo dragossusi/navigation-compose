@@ -4,6 +4,5 @@ enum class BotNavItem(
     val route: String
 ) {
     HOME("home"),
-    ITEM("item"),
-    HELP("help")
+    ITEMS("items"),
 }

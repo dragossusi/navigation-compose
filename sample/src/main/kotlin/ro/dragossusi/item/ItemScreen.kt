@@ -33,7 +33,7 @@ fun ItemScreen(onClick: () -> Unit) {
         ) {
             Text("Item")
             Button(onClick = onClick) {
-                Text("Go back")
+                Text("Help")
             }
         }
     }

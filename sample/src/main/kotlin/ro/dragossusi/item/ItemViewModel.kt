@@ -13,7 +13,7 @@ class ItemViewModel : MviViewModel<ItemUiState>(ItemUiState()) {
     init {
         viewModelScope.launch {
             updateState { it.copy(isLoading = true) }
-            delay(2000L)
+            delay(1000L)
             updateState { it.copy(isLoading = false) }
         }
     }
