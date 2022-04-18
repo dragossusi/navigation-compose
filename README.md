@@ -65,8 +65,5 @@ when the screen is removed from backstack.
 To obtain a `ViewModel` instance use the `rememberViewModel` method.
 
 ```kotlin
-val viewModel: ItemViewModel = rememberViewModel { arguments ->
-    //here you create your ViewModel however you want, it will be reused
-    ItemViewModel()
-}
+val viewModel: ItemViewModel = rememberViewModel(factory = <factory>)
 ```
