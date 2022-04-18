@@ -32,9 +32,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
+                implementation(project(":navigation"))
+                implementation("org.kodein.di:kodein-di:${Versions.kodein}")
+
                 implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.ui)
             }
         }
     }

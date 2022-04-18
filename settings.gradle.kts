@@ -8,4 +8,5 @@ pluginManagement {
 }
 
 include(":navigation")
+include(":navigation-kodein")
 include(":sample")

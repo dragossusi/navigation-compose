@@ -15,6 +15,8 @@ dependencies {
     @OptIn(ExperimentalComposeLibrary::class)
     implementation(compose.material3)
     implementation(project(":navigation"))
+    implementation(project(":navigation-kodein"))
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${Versions.coroutines}")
+    implementation("org.kodein.di:kodein-di-framework-compose:${Versions.kodein}")
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,10 +16,26 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.kodein.di.DI
+import org.kodein.di.bindProvider
+import org.kodein.di.compose.withDI
+import org.kodein.di.instance
+import ro.dragossusi.arch.NewInstanceFactory
 import ro.dragossusi.home.HomeScreen
 import ro.dragossusi.item.ItemScreen
+import ro.dragossusi.item.ItemViewModel
 import ro.dragossusi.navigation.*
+import ro.dragossusi.repository.ItemRepository
+import ro.dragossusi.repository.ItemRepositoryImpl
 
+val appDi = DI {
+    bindProvider<ItemRepository> {
+        ItemRepositoryImpl
+    }
+    bindProvider {
+        ItemViewModel(instance())
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun main() = application {
@@ -31,63 +48,11 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = windowState
     ) {
-        val navController = rememberNavController()
-        val entry by navController.navBackstackEntry
-        Scaffold(
-            bottomBar = {
-                NavigationBar {
-                    BotNavItem.values().forEach {
-                        NavigationBarItem(
-                            selected = entry?.startsWith(it.route) ?: false,
-                            onClick = {
-                                navController.navigate(
-                                    it.route,
-                                    navOptions = NavOptions(
-                                        launchSingleTop = true,
-                                        restoreState = true
-                                    )
-                                )
-                            },
-                            icon = {
-                                Icon(Icons.Default.Home, contentDescription = null)
-                            },
-                            label = {
-                                Text(it.route)
-                            }
-                        )
-                    }
-                }
-            }
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .padding(it)
-            )
-            NavHost(
-                navController,
-                "home"
+        withDI(appDi) {
+            CompositionLocalProvider(
+                LocalViewModelFactory provides NewInstanceFactory
             ) {
-                composable("home") {
-                    HomeScreen(
-                        onGoToItem = {
-                            navController.navigate("items")
-                        },
-                        onGoToHelp = {
-                            navController.navigate("items")
-                            navController.navigate("help")
-                        }
-                    )
-                }
-                navigation("items", startRoute = "item") {
-                    composable("item") {
-                        ItemScreen { navController.navigate("help") }
-                    }
-                    composable("help") {
-                        HelpScreen(
-                            onClick = navController::navigateUp
-                        )
-                    }
-                }
+                App()
             }
         }
     }

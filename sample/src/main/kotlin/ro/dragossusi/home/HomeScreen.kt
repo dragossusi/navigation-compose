@@ -17,9 +17,7 @@ fun HomeScreen(
     onGoToItem: () -> Unit,
     onGoToHelp: () -> Unit,
 ) {
-    val viewModel = rememberViewModel {
-        HomeViewModel()
-    }
+    val viewModel: HomeViewModel = rememberViewModel()
     val uiState by viewModel.uiState.collectAsState()
     if (uiState.isLoading) {
         Box(
